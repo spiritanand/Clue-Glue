@@ -1,9 +1,8 @@
 import { relations, sql } from "drizzle-orm";
-import {
-  index, integer, pgTableCreator, primaryKey, serial, text, timestamp, varchar
-} from "drizzle-orm/pg-core";
+import { index, integer, pgTableCreator, primaryKey, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { nanoid } from "nanoid";
+import { postType, postTypeOptions } from "~/lib/constants";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -13,32 +12,12 @@ import { nanoid } from "nanoid";
  */
 export const createTable = pgTableCreator((name) => `clue_glue_${name}`);
 
-export const posts = createTable(
-  "post",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdById: varchar("created_by", { length: 255 })
-      .notNull()
-      .references(() => users.id),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date(),
-    ),
-  },
-  (example) => ({
-    createdByIdIdx: index("created_by_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
-  }),
-);
-
+// Users
 export const users = createTable("user", {
-  id: varchar("id", { length: 255 })
-    .notNull()
+  id: text("id")
+    .$defaultFn(() => nanoid())
     .primaryKey()
-    .$defaultFn(() => nanoid()),
+    .notNull(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", {
@@ -128,3 +107,48 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 );
+
+// Company
+export const companies = createTable("company", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
+  adminId: text("admin_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  website: text("website"),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
+// Posts (announcements)
+export const posts = createTable("post", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  tags: text("tags", { enum: postTypeOptions }).default(postType.NEW).notNull(),
+  createdById: text("created_by")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+    mode: "date",
+  }).$onUpdate(() => new Date()),
+});
+
+// Relations
