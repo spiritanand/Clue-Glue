@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  CircleUser,
+  Eye,
   Home,
   LineChart,
   Menu,
@@ -23,8 +23,18 @@ import {
 import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { type ReactNode } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { getServerAuthSession } from "~/server/auth";
 
-export function AdminHeader({ children }: { children: ReactNode }) {
+export async function AdminHeader({ children }: { children: ReactNode }) {
+  const session = await getServerAuthSession();
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="bg-muted/40 hidden border-r md:block">
@@ -155,12 +165,26 @@ export function AdminHeader({ children }: { children: ReactNode }) {
               </div>
             </form>
           </div>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Eye />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Public View</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
+              <Avatar>
+                <AvatarImage
+                  src={session?.user?.image ?? "/fallbackAvatar.avif"}
+                />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
