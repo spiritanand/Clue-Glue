@@ -1,8 +1,10 @@
 import { relations, sql } from "drizzle-orm";
-import { index, integer, pgTableCreator, primaryKey, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  index, integer, json, pgTableCreator, primaryKey, text, timestamp, varchar
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { nanoid } from "nanoid";
-import { postType, postTypeOptions } from "~/lib/constants";
+import { feedbackStatus, feedbackStatusOptions, postType, postTypeOptions } from "~/lib/constants";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -108,6 +110,7 @@ export const verificationTokens = createTable(
   }),
 );
 
+// TODO: Add Logo
 // Company
 export const companies = createTable("company", {
   id: text("id")
@@ -117,8 +120,27 @@ export const companies = createTable("company", {
   adminId: text("admin_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
+  name: text("name").unique().notNull(),
   website: text("website"),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
+// Boards (Public Boards that users can post feedback to)
+export const boards = createTable("board", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
+  companyId: text("company_id")
+    .notNull()
+    .references(() => companies.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  description: text("description"),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
@@ -139,6 +161,36 @@ export const posts = createTable("post", {
   createdById: text("created_by")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+    mode: "date",
+  }).$onUpdate(() => new Date()),
+});
+
+// Feedback (User issues/feedback posted on boards)
+export const feedbacks = createTable("feedback", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
+  boardId: text("board_id")
+    .notNull()
+    .references(() => boards.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: text("status", { enum: feedbackStatusOptions })
+    .default(feedbackStatus.REVIEW)
+    .notNull(),
+  upvotes: json("upvotes").default([]), // holds all the users who have upvoted this feedback
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
