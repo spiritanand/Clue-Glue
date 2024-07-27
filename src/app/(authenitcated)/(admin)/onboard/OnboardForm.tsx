@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -17,25 +17,41 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent } from "~/components/ui/card";
 import { CircleCheck } from "lucide-react";
-
-const formSchema = z.object({
-  name: z.string().min(3, {
-    message: "Name must be at least 3 characters.",
-  }),
-  website: z.union([z.string().url(), z.string().max(0)]), // allow empty string or a valid URL
-});
+import { createCompanySchema } from "~/lib/zodSchemas";
+import { api } from "~/trpc/react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "~/lib/constants";
 
 export default function OnboardForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const router = useRouter();
+  const utils = api.useUtils();
+
+  const form = useForm<z.infer<typeof createCompanySchema>>({
+    resolver: zodResolver(createCompanySchema),
     defaultValues: {
       name: "",
       website: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const createPost = api.company.create.useMutation({
+    onSuccess: async () => {
+      await utils.company.invalidate();
+      toast.success("Company created 🚀");
+
+      router.push(ROUTES.DASHBOARD);
+    },
+    onError: (error) => {
+      toast.error(error.message ?? "Something went wrong, please try again!");
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof createCompanySchema>) {
+    createPost.mutate({
+      name: values.name,
+      website: values.website,
+    });
   }
 
   return (
@@ -82,6 +98,7 @@ export default function OnboardForm() {
             <Button
               type="submit"
               className="flex items-center gap-2 self-center text-xl"
+              disabled={createPost.isPending}
             >
               Submit
               <CircleCheck />
