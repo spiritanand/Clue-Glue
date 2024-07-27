@@ -1,4 +1,4 @@
-import NextAuth, { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth";
+import { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth";
 import Google from "next-auth/providers/google";
 import { env } from "~/env";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
@@ -91,5 +91,3 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = () => getServerSession(authOptions);
-
-export const { signIn, signOut } = NextAuth(authOptions);

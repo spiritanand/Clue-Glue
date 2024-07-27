@@ -18,9 +18,8 @@ export default async function Layout({
 
   return (
     <>
-      <AdminHeader>
-        <main className="container">{children}</main>
-      </AdminHeader>
+      <AdminHeader />
+      <main className="container">{children}</main>
     </>
   );
 }
