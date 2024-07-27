@@ -6,16 +6,17 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { posts } from "~/server/db/schema";
+import { db } from "~/server/db";
+import { eq } from "drizzle-orm";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
+  getAllByCompanyId: publicProcedure
+    .input(z.object({ companyId: z.string() }))
     .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+      return db.query.posts.findMany({
+        where: eq(posts.companyId, input.companyId),
+      });
     }),
-
   create: protectedProcedure
     .input(
       z.object({
@@ -30,8 +31,4 @@ export const postRouter = createTRPCRouter({
         userId: ctx.session.user.id,
       });
     }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });

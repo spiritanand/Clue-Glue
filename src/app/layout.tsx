@@ -26,7 +26,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${kanit.className}`}>
-      <body>
+      <body className="w-screen overflow-x-hidden">
         <Toaster richColors position="top-center" theme="light" />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>

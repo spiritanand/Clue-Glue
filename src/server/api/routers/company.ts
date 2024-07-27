@@ -2,6 +2,8 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { boards, companies } from "~/server/db/schema";
 import { createCompanySchema } from "~/lib/zodSchemas";
 import { eq } from "drizzle-orm";
+import { db } from "~/server/db";
+import { z } from "zod";
 
 export const companyRouter = createTRPCRouter({
   getMyCompany: protectedProcedure.query(async ({ ctx }) => {
@@ -9,6 +11,13 @@ export const companyRouter = createTRPCRouter({
       where: eq(companies.adminId, ctx.session.user.id),
     });
   }),
+  getAllBoards: protectedProcedure
+    .input(z.object({ companyId: z.string() }))
+    .query(async ({ input }) => {
+      return db.query.boards.findMany({
+        where: eq(boards.companyId, input.companyId),
+      });
+    }),
   create: protectedProcedure
     .input(createCompanySchema)
     .mutation(async ({ ctx, input }) => {

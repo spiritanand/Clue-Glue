@@ -27,13 +27,13 @@ export const feedbackStatusOptions = [
 ] as const;
 
 export const AUTH_ACTION_LINKS = {
-  SIGN_IN: "/api/auth/signin?callbackUrl=/admin/feedbacks",
+  SIGN_IN: "/api/auth/signin?callbackUrl=/admin/feedback",
   SIGN_OUT: "/api/auth/signout?callbackUrl=/",
 };
 
 export const ROUTES = {
   HOME: "/",
-  ADMIN_FEEDBACKS: "/admin/feedbacks",
+  ADMIN_FEEDBACK: "/admin/feedback",
   ADMIN_POSTS: "/admin/posts",
   ADMIN_ANALYTICS: "/admin/analytics",
   ONBOARD: "/onboard",

@@ -148,6 +148,7 @@ export const boards = createTable("board", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
+export type SelectBoard = typeof boards.$inferSelect;
 
 // Posts (announcements)
 export const posts = createTable("post", {
@@ -186,14 +187,14 @@ export const feedbacks = createTable("feedback", {
     .notNull()
     .references(() => boards.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
-  content: text("content").notNull(),
+  description: text("description").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   status: text("status", { enum: feedbackStatusOptions })
     .default(feedbackStatus.REVIEW)
     .notNull(),
-  upvotes: json("upvotes").default([]), // holds all the users who have upvoted this feedback
+  upvotes: json("upvotes").$type<string[]>().default([]).notNull(), // holds all the users who have upvoted this feedback
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
@@ -205,6 +206,7 @@ export const feedbacks = createTable("feedback", {
     mode: "date",
   }).$onUpdate(() => new Date()),
 });
+export type SelectFeedback = typeof feedbacks.$inferSelect;
 
 // Relations
 

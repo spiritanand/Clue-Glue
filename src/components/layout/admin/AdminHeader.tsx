@@ -28,7 +28,7 @@ export async function AdminHeader() {
 
   return (
     <div className="container flex">
-      <div className="bg-muted/40 hidden border-r md:block">
+      <div className="bg-muted/40 hidden md:block">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <Package2 className="h-6 w-6" />

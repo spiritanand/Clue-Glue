@@ -17,15 +17,15 @@ function AdminNavMenu({ className }: { className?: string }) {
       )}
     >
       <Link
-        href={ROUTES.ADMIN_FEEDBACKS}
+        href={ROUTES.ADMIN_FEEDBACK}
         className={`${
-          pathname === ROUTES.ADMIN_FEEDBACKS
+          pathname === ROUTES.ADMIN_FEEDBACK
             ? "text-primary bg-gray-950"
             : "text-muted-foreground hover:bg-gray-700"
         } hover:text-primary flex items-center gap-3 rounded-lg px-2 py-2 transition-all md:px-3`}
       >
         <MessageCircleCode className="h-6 w-6 md:h-4 md:w-4" />
-        <p>Feedbacks</p>
+        <p>Feedback</p>
       </Link>
 
       <Link
