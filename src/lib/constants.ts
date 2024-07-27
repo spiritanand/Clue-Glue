@@ -23,3 +23,8 @@ export const feedbackStatusOptions = [
   feedbackStatus.PROGRESS,
   feedbackStatus.CLOSED,
 ] as const;
+
+export const AUTH_ACTION_LINKS = {
+  SIGN_IN: "/api/auth/signin?callbackUrl=/admin/dashboard",
+  SIGN_OUT: "/api/auth/signout?callbackUrl=/",
+};
