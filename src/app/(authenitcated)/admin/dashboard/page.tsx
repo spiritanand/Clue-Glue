@@ -1,5 +1,5 @@
 function Page() {
-  return <div>DASH</div>;
+  return <main>DASH</main>;
 }
 
 export default Page;

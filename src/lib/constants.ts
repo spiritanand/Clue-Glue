@@ -15,6 +15,7 @@ export enum feedbackStatus {
   PLAN = "In Planning",
   PROGRESS = "In Progress",
   CLOSED = "Closed",
+  COMPLETED = "Completed",
 }
 
 export const feedbackStatusOptions = [
@@ -22,6 +23,7 @@ export const feedbackStatusOptions = [
   feedbackStatus.PLAN,
   feedbackStatus.PROGRESS,
   feedbackStatus.CLOSED,
+  feedbackStatus.COMPLETED,
 ] as const;
 
 export const AUTH_ACTION_LINKS = {
