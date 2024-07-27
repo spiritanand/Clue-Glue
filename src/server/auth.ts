@@ -1,6 +1,10 @@
 import { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth";
 import Google from "next-auth/providers/google";
 import { env } from "~/env";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { accounts, sessions, users, verificationTokens } from "~/server/db/schema";
+import { db } from "~/server/db";
+import { type Adapter } from "next-auth/adapters";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -38,12 +42,12 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  // adapter: DrizzleAdapter(db, {
-  //   usersTable: users,
-  //   accountsTable: accounts,
-  //   sessionsTable: sessions,
-  //   verificationTokensTable: verificationTokens,
-  // }) as Adapter,
+  adapter: DrizzleAdapter(db, {
+    usersTable: users,
+    accountsTable: accounts,
+    sessionsTable: sessions,
+    verificationTokensTable: verificationTokens,
+  }) as Adapter,
   providers: [
     Google({
       clientId: env.AUTH_GOOGLE_ID,
