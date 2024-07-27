@@ -31,6 +31,7 @@ import {
 } from "~/components/ui/tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getServerAuthSession } from "~/server/auth";
+import { AUTH_ACTION_LINKS } from "~/lib/constants";
 
 export async function AdminHeader({ children }: { children: ReactNode }) {
   const session = await getServerAuthSession();
@@ -159,8 +160,8 @@ export async function AdminHeader({ children }: { children: ReactNode }) {
                 <Search className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
                 <Input
                   type="search"
-                  placeholder="Search products..."
-                  className="bg-background w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                  placeholder="Search feedback..."
+                  className="bg-background w-full appearance-none pl-8 shadow-none"
                 />
               </div>
             </form>
@@ -191,7 +192,9 @@ export async function AdminHeader({ children }: { children: ReactNode }) {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={AUTH_ACTION_LINKS.SIGN_OUT}>Logout</Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
