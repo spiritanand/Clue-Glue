@@ -4,6 +4,8 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
+import ClientProviders from "~/app/ClientProviders";
+import { getServerAuthSession } from "~/server/auth";
 
 const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -21,14 +23,18 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en" className={`${kanit.className}`}>
       <body className="w-screen overflow-x-hidden">
-        <Toaster richColors position="top-center" theme="light" />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Toaster richColors theme="light" />
+        <ClientProviders session={session}>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </ClientProviders>
       </body>
     </html>
   );

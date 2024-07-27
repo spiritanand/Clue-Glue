@@ -35,4 +35,24 @@ export const feedbackRouter = createTRPCRouter({
         upvotes: [ctx.session.user.id],
       });
     }),
+  toggleUpvote: protectedProcedure
+    .input(z.object({ feedbackId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const feedback = await ctx.db.query.feedbacks.findFirst({
+        where: eq(feedbacks.id, input.feedbackId),
+      });
+
+      if (!feedback) throw new Error("Feedback not found");
+
+      const upvotes = feedback.upvotes.includes(ctx.session.user.id)
+        ? feedback.upvotes.filter((id) => id !== ctx.session.user.id)
+        : [...feedback.upvotes, ctx.session.user.id];
+
+      await ctx.db
+        .update(feedbacks)
+        .set({
+          upvotes,
+        })
+        .where(eq(feedbacks.id, input.feedbackId));
+    }),
 });

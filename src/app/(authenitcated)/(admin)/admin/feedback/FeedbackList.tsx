@@ -7,8 +7,12 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { api } from "~/trpc/react";
+import { Button } from "~/components/ui/button";
+import { ChevronUp } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 function FeedbackList({ boardId }: { boardId: string }) {
+  const session = useSession();
   const [feedbackList] = api.feedback.getAllByBoardId.useSuspenseQuery({
     boardId,
   });
@@ -20,9 +24,19 @@ function FeedbackList({ boardId }: { boardId: string }) {
           {feedbackList.map((f) => (
             <li key={f.id}>
               <Card className="mx-auto w-full max-w-2xl md:w-3/4">
-                <CardHeader>
-                  {f.title}
-                  <span>{f.upvotes.length} Upvotes</span>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <p className="text-xl font-semibold">{f.title}</p>
+                  <Button
+                    className="flex w-fit gap-2"
+                    variant={
+                      f.upvotes.includes(session.data?.user?.id ?? "")
+                        ? "default"
+                        : "outline"
+                    }
+                  >
+                    <ChevronUp />
+                    <p>{f.upvotes.length} </p>
+                  </Button>
                 </CardHeader>
                 <CardContent>{f.description}</CardContent>
                 <CardFooter>FOOTER</CardFooter>
