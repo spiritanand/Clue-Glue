@@ -36,6 +36,5 @@ export const ROUTES = {
   ADMIN_FEEDBACK: "/admin/feedback",
   ADMIN_POSTS: "/admin/posts",
   ADMIN_ANALYTICS: "/admin/analytics",
-  ADMIN_CHANGELOG: "/admin/changelog",
   ONBOARD: "/onboard",
 };
