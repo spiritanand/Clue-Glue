@@ -70,3 +70,29 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Start of Roadmap css */
+
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
+}
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.hideScrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.roadmap-board{
+    height:32rem;
+    @media (max-width: 768px) {
+        height: fit-content;
+        gap:1rem;
+    }
+}
+
+.card-height{
+    height: 26rem;
+}
+
+/* End of Roadmap css */
