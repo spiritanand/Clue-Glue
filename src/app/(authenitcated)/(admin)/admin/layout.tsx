@@ -18,9 +18,10 @@ export default async function Layout({
 
   return (
     <>
-      <AdminHeader>
-        <main className="container">{children}</main>
-      </AdminHeader>
+      <AdminHeader />
+      <div className="w-screen border-t"></div>
+
+      <main className="container">{children}</main>
     </>
   );
 }
