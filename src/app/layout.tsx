@@ -3,6 +3,7 @@ import { Kanit } from "next/font/google";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "~/components/ui/sonner";
 
 const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${kanit.className}`}>
       <body>
+        <Toaster richColors position="top-center" theme="light" />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>
