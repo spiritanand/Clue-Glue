@@ -6,7 +6,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { feedbacks } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { createFeedbackSchema } from "~/lib/zodSchemas";
 
 export const feedbackRouter = createTRPCRouter({
@@ -15,6 +15,7 @@ export const feedbackRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.db.query.feedbacks.findMany({
         where: eq(feedbacks.boardId, input.boardId),
+        orderBy: [desc(feedbacks.createdAt)],
       });
     }),
   create: protectedProcedure

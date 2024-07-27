@@ -11,7 +11,7 @@ async function SelectedBoard({ board }: { board: SelectBoard }) {
       <h2 className="mt-4 scroll-m-20 text-center text-3xl font-semibold tracking-tight">
         {board.name}
       </h2>
-      <p className="mb-4 text-center text-gray-400">{board.description}</p>
+      <p className="mb-10 text-center text-gray-400">{board.description}</p>
 
       <div className="flex flex-col gap-10 md:flex-row">
         <CreateFeedbackForm boardId={board.id} />
