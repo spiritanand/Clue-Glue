@@ -22,11 +22,10 @@ export default function Roadmap() {
 	// expecting return to be: {Roadmapstate: [postList]}
 
 	return (
-		<div className="w-full">
+		<div className="w-full my-4">
 			Roadmap Filters
 			<div
-				className="flex flex-col pt-4 justify-evenly md:flex-row sm:
-                items-center roadmap-board"
+				className="flex flex-col pt-4 items-center justify-evenly gap-8 md:flex-row md:gap-0"
 			>
 				<RoadMapStates title="RoadmapState" postList={postList} />
 				<RoadMapStates title="RoadmapState" postList={postList} />

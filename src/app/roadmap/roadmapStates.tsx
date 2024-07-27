@@ -16,7 +16,7 @@ export default function RoadMapStates({ title, postList }: { title: string, post
                     {title}
                 </CardTitle>
 				<hr/>
-				<CardContent className="p-6 flex flex-col overflow-y-scroll card-height" >
+				<CardContent className="p-6 flex flex-col overflow-y-scroll h-96" >
                     {/* List of posts */}
 					{postList.map((post: { id: string; title: string; board: string; upvotes: number; hasUpvoted: boolean; }) => {    
 						return <ShortPostTab key={post.id} postTitle={post.title} boardTitle={post.board} upvoteCount={post.upvotes} hasUpvoted={post.hasUpvoted}/>;

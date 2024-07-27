@@ -11,7 +11,7 @@ export default function ShortPostTab({
 }: { postTitle: string; boardTitle: string; upvoteCount: number; hasUpvoted: boolean }) {
 	return (
 		<div className="w-full max-w-xs flex items-center gap-4 mb-4">
-			<Button className={`flex flex-col h-full ${hasUpvoted ? 'bg-primary':''}`} variant="outline" size="icon">
+			<Button className={`flex flex-col h-full ${hasUpvoted ? 'bg-primary/25':''}`} variant="outline" size="icon">
 				<ChevronUp className="h-4 w-4" />
                 {/* increase upvote count if user has not upvoted it - make api call - user interactivity can make it client component*/}
 				{upvoteCount}
