@@ -7,17 +7,22 @@ export default function Home() {
 	return (
 		<>
 			<Navbar />
-			<div className="flex bg-gradient-to-t from-amber-400 to-amber-100 pb-12">
+			<div className="flex flex-col-reverse bg-gradient-to-t from-amber-400 to-amber-100 pb-12 lg:flex-row">
 				{/* Hero Text */}
-				<div className="flex flex-col items-center grow">
-					<h1 className="text-[108px] font-bold">
+				<div className="flex flex-col items-center grow px-4">
+					<h1 className="text-[54px] lg:text-[108px] font-bold">
 						Get <span className="text-[#0510eb]">Feedback</span>
 					</h1>
-					<h1 className="text-[108px] font-bold">
+					<h1 className="text-[54px] lg:text-[108px] font-bold">
 						Build <span className="text-[#0510eb]">Better</span>
 					</h1>
-					<p className="py-4">Collect Feedback, uncover insights and ship an awesome product.</p>
-					<Button variant="outline" className="bg-[#0510eb] my-2 p-6 text-2xl text-white rounded-2xl hover:bg-white hover:text-[#0510eb]">
+					<p className="py-4 text-wrap text-center text-align-center">
+						Collect Feedback, uncover insights and ship an awesome product.
+					</p>
+					<Button
+						variant="outline"
+						className="bg-[#0510eb] my-2 p-6 text-2xl text-white rounded-2xl hover:bg-white hover:text-[#0510eb]"
+					>
 						I want this
 					</Button>
 					<ul className="list-none flex gap-8 py-6">
@@ -36,7 +41,9 @@ export default function Home() {
 					</ul>
 				</div>
 				{/* Hero image */}
-				<Image src="/logo.svg" alt="Hero Image" width={500} height={500} />
+				<div className="flex items-center justify-center">
+					<Image src="/logo.svg" alt="Hero Image" width={500} height={500} />
+				</div>
 			</div>
 		</>
 	);
