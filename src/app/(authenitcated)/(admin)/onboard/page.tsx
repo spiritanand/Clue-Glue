@@ -13,10 +13,10 @@ async function Page() {
     where: eq(companies.adminId, session?.user?.id ?? ""),
   });
 
-  if (company) redirect(ROUTES.ADMIN_ROADMAP);
+  if (company) redirect(ROUTES.ADMIN_FEEDBACKS);
 
   return (
-    <main className="bg-primary/10 container flex min-h-screen flex-col items-center">
+    <main className="bg-primary/10 flex min-h-screen flex-col items-center">
       <h2 className="mt-10 flex scroll-m-20 items-center gap-2 border-b pb-2 text-3xl font-semibold">
         Welcome to
         <span className="text-primary hidden text-4xl font-extrabold tracking-wide md:inline-block">

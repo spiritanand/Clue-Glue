@@ -40,7 +40,7 @@ export default function OnboardForm() {
       await utils.company.invalidate();
       toast.success("Company created 🚀");
 
-      router.push(ROUTES.ADMIN_ROADMAP);
+      router.push(ROUTES.ADMIN_FEEDBACKS);
     },
     onError: (error) => {
       toast.error(error.message ?? "Something went wrong, please try again!");
@@ -55,7 +55,7 @@ export default function OnboardForm() {
   }
 
   return (
-    <Card className="bg-primary/15 mt-10 w-full shadow-xl md:w-3/4">
+    <Card className="bg-primary/15 mt-10 max-w-screen-md shadow-xl md:w-3/4">
       <CardContent>
         <Form {...form}>
           <form
