@@ -27,9 +27,9 @@ export async function AdminHeader() {
   const company = await api.company.getMyCompany();
 
   return (
-    <div className="flex w-full">
+    <div className="container flex">
       <div className="bg-muted/40 hidden border-r md:block">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <Package2 className="h-6 w-6" />
             <span className="">{company?.name}</span>
@@ -37,7 +37,7 @@ export async function AdminHeader() {
         </div>
       </div>
 
-      <header className="bg-muted/40 olg:px-6 flex h-14 flex-1 items-center justify-between gap-4 border-b px-4 lg:h-[60px]">
+      <header className="bg-muted/40 olg:px-6 flex h-14 flex-1 items-center justify-between gap-4 px-4 lg:h-[60px]">
         <Sheet>
           <SheetTrigger asChild>
             <Button

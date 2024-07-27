@@ -13,7 +13,7 @@ async function Page() {
     where: eq(companies.adminId, session?.user?.id ?? ""),
   });
 
-  if (company) redirect(ROUTES.DASHBOARD);
+  if (company) redirect(ROUTES.ADMIN_ROADMAP);
 
   return (
     <main className="bg-primary/10 container flex min-h-screen flex-col items-center">

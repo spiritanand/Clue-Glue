@@ -40,7 +40,7 @@ export default function OnboardForm() {
       await utils.company.invalidate();
       toast.success("Company created 🚀");
 
-      router.push(ROUTES.DASHBOARD);
+      router.push(ROUTES.ADMIN_ROADMAP);
     },
     onError: (error) => {
       toast.error(error.message ?? "Something went wrong, please try again!");
