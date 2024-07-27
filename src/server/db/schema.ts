@@ -158,9 +158,12 @@ export const posts = createTable("post", {
   title: text("title").notNull(),
   content: text("content").notNull(),
   tags: text("tags", { enum: postTypeOptions }).default(postType.NEW).notNull(),
-  createdById: text("created_by")
+  userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
+  companyId: text("company_id")
+    .notNull()
+    .references(() => companies.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
@@ -204,3 +207,43 @@ export const feedbacks = createTable("feedback", {
 });
 
 // Relations
+
+// Admin to Company
+export const companiesRelations = relations(companies, ({ one }) => ({
+  admin: one(users, {
+    fields: [companies.adminId],
+    references: [users.id],
+  }),
+}));
+
+// Board to Company
+export const boardsRelations = relations(boards, ({ one }) => ({
+  company: one(companies, {
+    fields: [boards.companyId],
+    references: [companies.id],
+  }),
+}));
+
+// Feedback to (Board + User)
+export const feedbacksRelations = relations(feedbacks, ({ one }) => ({
+  board: one(boards, {
+    fields: [feedbacks.boardId],
+    references: [boards.id],
+  }),
+  user: one(users, {
+    fields: [feedbacks.userId],
+    references: [users.id],
+  }),
+}));
+
+// Post to (User + Company)
+export const postsRelations = relations(posts, ({ one }) => ({
+  user: one(users, {
+    fields: [posts.userId],
+    references: [users.id],
+  }),
+  company: one(companies, {
+    fields: [posts.companyId],
+    references: [companies.id],
+  }),
+}));
