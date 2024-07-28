@@ -4,7 +4,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { nanoid } from "nanoid";
-import { feedbackStatus, feedbackStatusOptions, postType, postTypeOptions } from "~/lib/constants";
+import { FeedbackStatus, feedbackStatusOptions, PostType, postTypeOptions } from "~/lib/constants";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -28,6 +28,7 @@ export const users = createTable("user", {
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
 });
+export type SelectUser = typeof users.$inferSelect;
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
@@ -159,7 +160,7 @@ export const posts = createTable("post", {
     .$defaultFn(() => nanoid()),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  tags: text("tags", { enum: postTypeOptions }).default(postType.NEW).notNull(),
+  tags: text("tags", { enum: postTypeOptions }).default(PostType.NEW).notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -193,7 +194,7 @@ export const feedbacks = createTable("feedback", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   status: text("status", { enum: feedbackStatusOptions })
-    .default(feedbackStatus.REVIEW)
+    .default(FeedbackStatus.REVIEW)
     .notNull(),
   upvotes: json("upvotes").$type<string[]>().default([]).notNull(), // holds all the users who have upvoted this feedback
   createdAt: timestamp("created_at", {

@@ -1,90 +1,29 @@
-"use client";
-import Link from "next/link";
-import { Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
+import CreatePostForm from "~/app/(authenitcated)/(admin)/admin/posts/CreatePostForm";
+import { api, HydrateClient } from "~/trpc/server";
+import PostsList from "~/app/(authenitcated)/(admin)/admin/posts/PostsList";
 
-export default function Changelog() {
-  const [searchPost, setSearchPost] = useState("");
-  const [changelogPosts] = useState([
-    {
-      id: "1",
-      title: "First posts post",
-      description: "This is the first posts post",
-    },
-    {
-      id: "2",
-      title: "Second posts post",
-      description: "This is the second posts post",
-    },
-    {
-      id: "3",
-      title: "Third posts post",
-      description: "This is the third posts post",
-    },
-  ]);
+export default async function Page() {
+  const company = await api.company.getMyCompany();
+  void api.post.getAllByCompanyId.prefetch({
+    companyId: company?.id ?? "",
+  });
+
   return (
-    <div id="change-log" className="flex h-full w-full flex-col md:flex-row">
-      {/* sidebar for posts - user interaction hence client component */}
-      <Card className="h-fit flex-grow-0 rounded-none md:h-[90vh]">
-        <Link className="flex cursor-pointer justify-between p-4" href="#">
-          Create a new Entry
-          <Plus />
-        </Link>
-        <hr />
-        <CardContent className="py-4">
-          {/* search bar */}
-          <Input
-            value={searchPost}
-            onChange={(event) => setSearchPost(event.target.value)}
-            placeholder="Search for a changelog"
-            type="search"
-          />
-          {/* To-do: add other filters like type and status */}
-        </CardContent>
-      </Card>
+    <>
+      <h2 className="mt-4 scroll-m-20 text-center text-3xl font-semibold tracking-tight">
+        Create a Post
+      </h2>
+      <p className="mb-10 text-center text-gray-400">
+        Share announcements and updates with your users
+      </p>
 
-      {/* End of sidebar */}
+      <div className="flex flex-col gap-10 md:flex-row">
+        <CreatePostForm companyId={company?.id ?? ""} />
 
-      {/* List of posts - editable for admin view */}
-      <Card className="h-[90vh] flex-grow overflow-y-scroll rounded-none">
-        <CardHeader>
-          <CardTitle>Changelog</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {/* List of posts posts */}
-          {changelogPosts.length ? (
-            changelogPosts.map(
-              (changepost: {
-                id: string;
-                title: string;
-                description: string;
-              }) => (
-                <div className="border-2 p-4" key={changepost.id}>
-                  {/* Todo: scope of time, edit, delete and tag showcasing its status */}
-                  <div className="flex justify-end">
-                    <Trash2
-                      className="cursor-pointer"
-                      onClick={() => console.log("delete from database")}
-                      stroke="red"
-                    />
-                  </div>
-                  <Link href={`changelog/${changepost.id}`}>
-                    <h1 className="pb-4 text-2xl hover:text-sky-700">
-                      {changepost.title}
-                    </h1>
-                  </Link>
-                  <p>{changepost.description}</p>
-                  {/* Todo: like metrics, share link */}
-                </div>
-              ),
-            )
-          ) : (
-            <p>No changelog posts found</p>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+        <HydrateClient>
+          <PostsList companyId={company?.id ?? ""} />
+        </HydrateClient>
+      </div>
+    </>
   );
 }

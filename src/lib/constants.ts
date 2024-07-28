@@ -1,25 +1,31 @@
 // Base Enum
-export enum postType {
+export enum PostType {
   NEW = "NEW",
   FIX = "FIX",
   IMPROVEMENT = "IMPROVEMENT",
 }
 
 // Labels to show to user
-export const postTypeLabels: Record<postType, string> = {
-  [postType.NEW]: "New",
-  [postType.FIX]: "Fix",
-  [postType.IMPROVEMENT]: "Improvement",
+export const postTypeLabels: Record<PostType, string> = {
+  [PostType.NEW]: "New",
+  [PostType.FIX]: "Fix",
+  [PostType.IMPROVEMENT]: "Improvement",
 };
+
+export enum PostTypeColors {
+  NEW = "text-violet-600",
+  FIX = "text-orange-600",
+  IMPROVEMENT = "text-teal-600",
+}
 
 // Used in schema
 export const postTypeOptions = [
-  postType.NEW,
-  postType.FIX,
-  postType.IMPROVEMENT,
+  PostType.NEW,
+  PostType.FIX,
+  PostType.IMPROVEMENT,
 ] as const;
 
-export enum feedbackStatus {
+export enum FeedbackStatus {
   REVIEW = "REVIEW",
   PLAN = "PLAN",
   PROGRESS = "PROGRESS",
@@ -27,15 +33,15 @@ export enum feedbackStatus {
   COMPLETED = "COMPLETED",
 }
 
-export const feedbackStatusLabels: Record<feedbackStatus, string> = {
-  [feedbackStatus.REVIEW]: "Under Review",
-  [feedbackStatus.PLAN]: "In Planning",
-  [feedbackStatus.PROGRESS]: "In Progress",
-  [feedbackStatus.CLOSED]: "Closed",
-  [feedbackStatus.COMPLETED]: "Completed",
+export const feedbackStatusLabels: Record<FeedbackStatus, string> = {
+  [FeedbackStatus.REVIEW]: "Under Review",
+  [FeedbackStatus.PLAN]: "In Planning",
+  [FeedbackStatus.PROGRESS]: "In Progress",
+  [FeedbackStatus.CLOSED]: "Closed",
+  [FeedbackStatus.COMPLETED]: "Completed",
 };
 
-export enum feedbackStatusColors {
+export enum FeedbackStatusColors {
   REVIEW = "text-stone-600",
   PLAN = "text-sky-600",
   PROGRESS = "text-fuchsia-600",
@@ -44,11 +50,11 @@ export enum feedbackStatusColors {
 }
 
 export const feedbackStatusOptions = [
-  feedbackStatus.REVIEW,
-  feedbackStatus.PLAN,
-  feedbackStatus.PROGRESS,
-  feedbackStatus.CLOSED,
-  feedbackStatus.COMPLETED,
+  FeedbackStatus.REVIEW,
+  FeedbackStatus.PLAN,
+  FeedbackStatus.PROGRESS,
+  FeedbackStatus.CLOSED,
+  FeedbackStatus.COMPLETED,
 ] as const;
 
 export const AUTH_ACTION_LINKS = {
