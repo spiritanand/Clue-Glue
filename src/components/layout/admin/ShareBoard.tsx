@@ -16,7 +16,7 @@ function ShareBoard({ companyName }: { companyName: string }) {
         <TooltipTrigger
           onClick={() => {
             void navigator.clipboard.writeText(
-              encodeURI(`${window.location.origin}/${companyName}/feedback`),
+              encodeURI(`${window.location.origin}/${companyName}/roadmap`),
             );
 
             toast.success("Link copied to clipboard!");
