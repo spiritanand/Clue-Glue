@@ -43,8 +43,8 @@ export const feedbackStatusLabels: Record<FeedbackStatus, string> = {
 
 export enum FeedbackStatusColors {
   REVIEW = "text-stone-600",
-  PLAN = "text-sky-600",
-  PROGRESS = "text-fuchsia-600",
+  PLAN = "text-fuchsia-600",
+  PROGRESS = "text-sky-600",
   CLOSED = "text-red-600",
   COMPLETED = "text-green-600",
 }
@@ -69,3 +69,17 @@ export const ROUTES = {
   ADMIN_ANALYTICS: "/admin/analytics",
   ONBOARD: "/onboard",
 };
+
+export enum FeedbackStatusBgColors {
+  REVIEW = "bg-stone-400",
+  PLAN = "bg-fuchsia-400",
+  PROGRESS = "bg-sky-400",
+  CLOSED = "bg-red-400",
+  COMPLETED = "bg-green-400",
+}
+
+export enum PostTypeBgColors {
+  NEW = "bg-violet-400",
+  FIX = "bg-orange-400",
+  IMPROVEMENT = "bg-teal-400",
+}

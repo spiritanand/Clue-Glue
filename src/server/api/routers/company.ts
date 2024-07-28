@@ -1,4 +1,8 @@
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { boards, companies } from "~/server/db/schema";
 import { createCompanySchema } from "~/lib/zodSchemas";
 import { eq } from "drizzle-orm";
@@ -11,7 +15,7 @@ export const companyRouter = createTRPCRouter({
       where: eq(companies.adminId, ctx.session.user.id),
     });
   }),
-  getCompanyByName: protectedProcedure
+  getCompanyByName: publicProcedure
     .input(z.object({ companyName: z.string() }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.companies.findFirst({

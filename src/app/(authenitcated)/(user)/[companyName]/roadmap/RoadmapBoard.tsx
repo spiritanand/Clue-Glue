@@ -1,52 +1,51 @@
-import { Card, CardContent, CardTitle } from "~/components/ui/card";
-import ShortPostTab from "./FeedbackMiniCard";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { type ReactNode } from "react";
+import { type SelectFeedback } from "~/server/db/schema";
+import { Button } from "~/components/ui/button";
+import { ChevronUp } from "lucide-react";
 
 export default function RoadmapBoard({
   title,
-  postList,
+  feedbackList,
 }: {
-  title: string;
-  postList: {
-    id: string;
-    title: string;
-    board: string;
-    upvotes: number;
-    hasUpvoted: boolean;
-  }[];
+  title: ReactNode;
+  feedbackList: SelectFeedback[];
 }) {
-  // expecting a list of posts
-
   return (
-    <div className="w-full max-w-xs md:flex md:gap-6">
-      <Card className="h-full w-full">
-        <CardTitle className="p-3">
-          {/* can add colored element to differentiate */}
-          {title}
-        </CardTitle>
-        <hr />
-        <CardContent className="flex h-96 flex-col overflow-y-scroll p-6">
-          {/* List of posts */}
-          {postList.map(
-            (post: {
-              id: string;
-              title: string;
-              board: string;
-              upvotes: number;
-              hasUpvoted: boolean;
-            }) => {
-              return (
-                <ShortPostTab
-                  key={post.id}
-                  postTitle={post.title}
-                  boardTitle={post.board}
-                  upvoteCount={post.upvotes}
-                  hasUpvoted={post.hasUpvoted}
-                />
-              );
-            },
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="flex-1">
+      <CardTitle className="flex items-center p-3">{title}</CardTitle>
+      <hr />
+      <CardContent className="h-[60vh] overflow-y-scroll p-6">
+        {feedbackList.length > 0 ? (
+          <ul className="flex flex-col">
+            {feedbackList.map((f) => (
+              <li key={f.id}>
+                <Card className="shadow-none">
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <Button
+                      className="flex w-fit gap-2"
+                      // variant={
+                      //   f.upvotes.includes(session.data?.user?.id ?? "")
+                      //     ? "default"
+                      //     : "outline"
+                      // }
+                    >
+                      <ChevronUp />
+                      <p>{f.upvotes.length} </p>
+                    </Button>
+
+                    <p className="text-xl font-semibold">{f.title}</p>
+                  </CardHeader>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+            Nothing here
+          </h4>
+        )}
+      </CardContent>
+    </Card>
   );
 }

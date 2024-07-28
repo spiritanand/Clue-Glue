@@ -1,91 +1,85 @@
 import RoadmapBoard from "./RoadmapBoard";
+import {
+  FeedbackStatus,
+  FeedbackStatusColors,
+  feedbackStatusLabels,
+} from "~/lib/constants";
+import { cn } from "~/lib/utils";
+import { Dot } from "lucide-react";
+import { api } from "~/trpc/server";
+import { type SelectFeedback } from "~/server/db/schema";
 
-export default function Roadmap() {
-  const postList = [
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
+interface AccumulatorType {
+  progress: SelectFeedback[];
+  review: SelectFeedback[];
+  plan: SelectFeedback[];
+}
+
+export default async function Roadmap({ boardId }: { boardId: string }) {
+  const feedbackList = await api.feedback.getAllByBoardId({
+    boardId,
+  });
+
+  const { progress, review, plan } = feedbackList.reduce<AccumulatorType>(
+    (acc, feedback) => {
+      switch (feedback.status) {
+        case FeedbackStatus.PROGRESS:
+          acc.progress.push(feedback);
+          break;
+        case FeedbackStatus.REVIEW:
+          acc.review.push(feedback);
+          break;
+        case FeedbackStatus.PLAN:
+          acc.plan.push(feedback);
+          break;
+      }
+
+      return acc;
     },
     {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: true,
+      progress: [],
+      review: [],
+      plan: [],
     },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-    {
-      id: "4",
-      title: "xyz",
-      board: "board",
-      upvotes: 5,
-      hasUpvoted: false,
-    },
-  ];
+  );
 
   return (
-    <div className="flex flex-col items-center justify-evenly gap-8 pt-4 md:flex-row md:gap-0">
-      <RoadmapBoard title="RoadmapState" postList={postList} />
-      <RoadmapBoard title="RoadmapState" postList={postList} />
-      <RoadmapBoard title="RoadmapState" postList={postList} />
+    <div className="mb-10 flex flex-col justify-evenly gap-10 pt-4 md:flex-row md:items-center">
+      <RoadmapBoard
+        title={
+          <>
+            <Dot className={cn(FeedbackStatusColors.REVIEW)} />
+            <p className={cn(FeedbackStatusColors.REVIEW)}>
+              {feedbackStatusLabels.REVIEW}
+            </p>
+          </>
+        }
+        feedbackList={review}
+      />
+      <RoadmapBoard
+        title={
+          <>
+            <Dot className={cn(FeedbackStatusColors.PLAN)} />
+            <p className={cn(FeedbackStatusColors.PLAN)}>
+              {feedbackStatusLabels.PLAN}
+            </p>
+          </>
+        }
+        feedbackList={plan}
+      />
+      <RoadmapBoard
+        title={
+          <>
+            <Dot
+              className={cn("animate-pulse", FeedbackStatusColors.PROGRESS)}
+            />
+            <p className={cn(FeedbackStatusColors.PROGRESS)}>
+              {feedbackStatusLabels.PROGRESS}
+            </p>
+          </>
+        }
+        feedbackList={progress}
+      />
     </div>
   );
 }
