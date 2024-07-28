@@ -22,6 +22,8 @@ import { AUTH_ACTION_LINKS } from "~/lib/constants";
 import { api } from "~/trpc/server";
 import NavMenu from "~/components/layout/user/NavMenu";
 import LoginToSamePage from "~/components/layout/user/LoginToSamePage";
+import WhitelabelCompany from "~/components/layout/WhitelabelCompany";
+import ShareBoard from "~/components/layout/admin/ShareBoard";
 
 export async function Header({ companyName }: { companyName: string }) {
   const session = await getServerAuthSession();
@@ -32,10 +34,7 @@ export async function Header({ companyName }: { companyName: string }) {
     <div className="container flex">
       <div className="bg-muted/40 hidden md:block">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Package2 className="h-6 w-6" />
-            <span>{company?.name}</span>
-          </Link>
+          <WhitelabelCompany companyName={company?.name ?? ""} />
         </div>
       </div>
 
@@ -68,16 +67,20 @@ export async function Header({ companyName }: { companyName: string }) {
 
         <div className="flex items-center gap-6">
           {isAdmin ? (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <EyeOff />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Admin View</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <EyeOff />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Admin View</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <ShareBoard companyName={company?.name ?? ""} />
+            </>
           ) : null}
 
           {session?.user?.id ? (

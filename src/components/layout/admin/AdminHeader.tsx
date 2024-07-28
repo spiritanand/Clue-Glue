@@ -21,6 +21,8 @@ import { getServerAuthSession } from "~/server/auth";
 import { AUTH_ACTION_LINKS } from "~/lib/constants";
 import { api } from "~/trpc/server";
 import AdminNavMenu from "~/components/layout/admin/AdminNavMenu";
+import WhitelabelCompany from "~/components/layout/WhitelabelCompany";
+import ShareBoard from "~/components/layout/admin/ShareBoard";
 
 export async function AdminHeader() {
   const session = await getServerAuthSession();
@@ -30,10 +32,7 @@ export async function AdminHeader() {
     <div className="container flex">
       <div className="bg-muted/40 hidden md:block">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Package2 className="h-6 w-6" />
-            <span>{company?.name}</span>
-          </Link>
+          <WhitelabelCompany companyName={company?.name ?? ""} />
         </div>
       </div>
 
@@ -75,6 +74,8 @@ export async function AdminHeader() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
+          <ShareBoard companyName={company?.name ?? ""} />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
