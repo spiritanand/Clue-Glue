@@ -1,29 +1,50 @@
-# Create T3 App
+# ClueGlue - Customer Feedback Application
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Welcome to **ClueGlue**, the ultimate solution for collecting and managing customer feedback to help prioritize features based on user demand. ClueGlue offers a streamlined experience for both product owners and users to interact effectively and transparently.
 
-## What's next? How do I make an app with this?
+## Overview
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+**ClueGlue** allows product owners to list their products and gather valuable feedback from customers. Users can submit feature requests, track their progress, and stay informed about upcoming releases. Administrators can manage feature statuses, release updates, and ensure a smooth feedback loop.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Features
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### User View
 
-## Learn More
+- **Feature Requests:** Submit new feature requests and suggestions.
+- **Roadmap Tracking:** Monitor the progress of feature requests through a roadmap table view.
+- **Progress Updates:** Stay informed about the status of submitted features.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Admin View
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **Feature Management:** Oversee and update the status of feature requests.
+- **Release Posts:** Publish updates to announce upcoming feature releases.
+- **Dashboard:** Manage and review all feature requests and user feedback in one place.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Tech Stack
 
-## How do I deploy this?
+- **Next.js:** Framework for building server-rendered React applications.
+- **NextAuth.js:** Authentication solution for secure sign-in and user management.
+- **Prisma:** ORM for database interactions and schema management.
+- **Drizzle:** Framework for managing data interactions and migrations.
+- **Tailwind CSS - Shadcn:** Utility-first CSS framework for custom styling.
+- **tRPC:** Type-safe API communication between client and server.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Getting Started
+
+To get started with ClueGlue, follow these steps:
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) for package management
+
+# Url Link: https://clue-glue.vercel.app/
+
+## Usage
+
+- **Admin Users:** Log in to manage feature requests, update statuses, and release posts.
+- **Regular Users:** Create feature requests and track their progress on the roadmap.
+
+Thank you for using ClueGlue! We hope it helps you gather valuable feedback and make informed decisions on feature development.
