@@ -1,3 +1,5 @@
+"use client";
+
 import RoadmapBoard from "./RoadmapBoard";
 import {
   FeedbackStatus,
@@ -6,8 +8,8 @@ import {
 } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 import { Dot } from "lucide-react";
-import { api } from "~/trpc/server";
 import { type SelectFeedback } from "~/server/db/schema";
+import { api } from "~/trpc/react";
 
 interface AccumulatorType {
   progress: SelectFeedback[];
@@ -15,8 +17,8 @@ interface AccumulatorType {
   plan: SelectFeedback[];
 }
 
-export default async function Roadmap({ boardId }: { boardId: string }) {
-  const feedbackList = await api.feedback.getAllByBoardId({
+export default function Roadmap({ boardId }: { boardId: string }) {
+  const [feedbackList] = api.feedback.getAllByBoardId.useSuspenseQuery({
     boardId,
   });
 
@@ -56,6 +58,7 @@ export default async function Roadmap({ boardId }: { boardId: string }) {
         }
         feedbackList={review}
       />
+
       <RoadmapBoard
         title={
           <>
@@ -67,6 +70,7 @@ export default async function Roadmap({ boardId }: { boardId: string }) {
         }
         feedbackList={plan}
       />
+
       <RoadmapBoard
         title={
           <>

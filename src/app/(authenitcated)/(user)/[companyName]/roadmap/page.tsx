@@ -1,4 +1,4 @@
-import { api } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
 import Roadmap from "~/app/(authenitcated)/(user)/[companyName]/roadmap/Roadmap";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
@@ -22,6 +22,8 @@ async function Page({ params }: { params: { companyName: string } }) {
       </>
     );
 
+  void api.feedback.getAllByBoardId.prefetch({ boardId: board.id });
+
   return (
     <>
       <h2 className="mt-4 scroll-m-20 text-center text-3xl font-semibold tracking-tight">
@@ -31,7 +33,9 @@ async function Page({ params }: { params: { companyName: string } }) {
         See what we have been working on
       </p>
 
-      <Roadmap boardId={board.id} />
+      <HydrateClient>
+        <Roadmap boardId={board.id} />
+      </HydrateClient>
     </>
   );
 }

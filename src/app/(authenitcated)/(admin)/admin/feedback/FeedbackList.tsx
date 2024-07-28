@@ -7,12 +7,11 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { api } from "~/trpc/react";
-import { Button } from "~/components/ui/button";
-import { ChevronUp } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { FeedbackItemFooter } from "~/app/(authenitcated)/(admin)/admin/feedback/FeedbackItemFooter";
 import { type ExtendedSelectFeedback } from "~/lib/types";
+import UpvoteButton from "~/app/(authenitcated)/(user)/[companyName]/UpvoteButton";
 
 function FeedbackList({ boardId }: { boardId: string }) {
   const session = useSession();
@@ -77,20 +76,7 @@ function FeedbackList({ boardId }: { boardId: string }) {
                 <Card className="mx-auto w-full max-w-2xl md:w-3/4">
                   <CardHeader className="flex flex-row items-center justify-between">
                     <p className="text-xl font-semibold">{f.title}</p>
-                    <Button
-                      className="flex w-fit gap-2"
-                      variant={
-                        f.upvotes.includes(session.data?.user?.id ?? "")
-                          ? "default"
-                          : "outline"
-                      }
-                      onClick={() => {
-                        toggleUpvote.mutate({ feedbackId: f.id });
-                      }}
-                    >
-                      <ChevronUp />
-                      <p>{f.upvotes.length} </p>
-                    </Button>
+                    <UpvoteButton feedback={f} />
                   </CardHeader>
                   <CardContent>{f.description}</CardContent>
                   <CardFooter>

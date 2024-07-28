@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { type ReactNode } from "react";
 import { type SelectFeedback } from "~/server/db/schema";
-import { Button } from "~/components/ui/button";
-import { ChevronUp } from "lucide-react";
+import UpvoteButton from "~/app/(authenitcated)/(user)/[companyName]/UpvoteButton";
 
 export default function RoadmapBoard({
   title,
@@ -22,17 +21,7 @@ export default function RoadmapBoard({
               <li key={f.id}>
                 <Card className="shadow-none">
                   <CardHeader className="flex flex-row items-center justify-between">
-                    <Button
-                      className="flex w-fit gap-2"
-                      // variant={
-                      //   f.upvotes.includes(session.data?.user?.id ?? "")
-                      //     ? "default"
-                      //     : "outline"
-                      // }
-                    >
-                      <ChevronUp />
-                      <p>{f.upvotes.length} </p>
-                    </Button>
+                    <UpvoteButton feedback={f} />
 
                     <p className="text-xl font-semibold">{f.title}</p>
                   </CardHeader>
