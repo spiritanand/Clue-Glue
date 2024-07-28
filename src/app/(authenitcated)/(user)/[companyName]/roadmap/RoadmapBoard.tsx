@@ -17,17 +17,19 @@ export default function RoadmapBoard({
       <CardContent className="h-[60vh] overflow-y-scroll p-6">
         {feedbackList.length > 0 ? (
           <ul className="flex flex-col gap-4">
-            {feedbackList.map((f) => (
-              <li key={f.id}>
-                <Card className="shadow-none">
-                  <CardHeader className="flex flex-row items-center justify-between gap-4">
-                    <UpvoteButton feedback={f} />
+            {feedbackList
+              .sort((f1, f2) => f2.upvotes.length - f1.upvotes.length)
+              .map((f) => (
+                <li key={f.id}>
+                  <Card className="shadow-none">
+                    <CardHeader className="flex flex-row items-center gap-4">
+                      <UpvoteButton feedback={f} />
 
-                    <p className="text-lg font-semibold">{f.title}</p>
-                  </CardHeader>
-                </Card>
-              </li>
-            ))}
+                      <p className="text-lg font-semibold">{f.title}</p>
+                    </CardHeader>
+                  </Card>
+                </li>
+              ))}
           </ul>
         ) : (
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">

@@ -1,56 +1,71 @@
+import Navbar from "./_components/navbar";
+import Image from "next/image";
+import { CircleCheck } from "lucide-react";
 import Link from "next/link";
+import { AUTH_ACTION_LINKS, ROUTES } from "~/lib/constants";
+import { Button } from "~/components/ui/button";
 import { getServerAuthSession } from "~/server/auth";
-import { AUTH_ACTION_LINKS } from "~/lib/constants";
 
-export default async function Home() {
+export default async function Page() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
+    <div className="bg-primary/10 min-h-screen">
+      <div className="container">
+        <Navbar />
+
+        <main className="flex-1">
+          <section className="w-full py-12 md:py-4">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+              <div className="flex flex-col items-center justify-center space-y-4 md:space-y-8">
+                <h1 className="text-center text-4xl font-bold sm:text-6xl xl:text-[108px]">
+                  Get{" "}
+                  <span className="font-black text-[#0510EB]">Feedback.</span>
+                </h1>
+                <h1 className="text-center text-4xl font-bold sm:text-6xl xl:text-[108px]">
+                  Build{" "}
+                  <span className="font-black text-[#0510EB]">Better.</span>
+                </h1>
+                <p className="text-muted-foreground max-w-[600px] text-center text-xs md:text-lg">
+                  Collect feedback, uncover insights, and ship an awesome
+                  product.
+                </p>
+                <Link
+                  href={
+                    session?.user?.id
+                      ? ROUTES.ADMIN_FEEDBACK
+                      : AUTH_ACTION_LINKS.SIGN_IN
+                  }
+                >
+                  <Button className="text-lg shadow-2xl">Get Started</Button>
+                </Link>
+                <ul className="flex list-none gap-4 py-2 text-sm text-[#0510EB]/50 md:gap-8">
+                  <li className="flex gap-2">
+                    <CircleCheck />
+                    Free
+                  </li>
+                  <li className="flex gap-2">
+                    <CircleCheck />
+                    Open Source
+                  </li>
+                  <li className="flex gap-2">
+                    <CircleCheck />
+                    Self host
+                  </li>
+                </ul>
+              </div>
+              <Image
+                src="/roadmapDemo.png"
+                width={300}
+                height={500}
+                objectFit="cover"
+                alt="Hero"
+                className="order-last overflow-hidden rounded-xl object-bottom sm:w-full"
+              />
             </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <Link
-              href={
-                session ? AUTH_ACTION_LINKS.SIGN_OUT : AUTH_ACTION_LINKS.SIGN_IN
-              }
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </Link>
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
-    </main>
+    </div>
   );
 }
