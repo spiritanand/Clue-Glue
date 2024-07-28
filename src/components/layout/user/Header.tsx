@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Eye, Menu, Package2 } from "lucide-react";
+import { EyeOff, Menu, Package2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -20,11 +20,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getServerAuthSession } from "~/server/auth";
 import { AUTH_ACTION_LINKS } from "~/lib/constants";
 import { api } from "~/trpc/server";
-import AdminNavMenu from "~/components/layout/admin/AdminNavMenu";
+import NavMenu from "~/components/layout/user/NavMenu";
 
-export async function AdminHeader() {
+export async function Header({ companyName }: { companyName: string }) {
   const session = await getServerAuthSession();
-  const company = await api.company.getMyCompany();
+  const company = await api.company.getCompanyByName({ companyName });
+  const isAdmin = company?.adminId === session?.user?.id;
 
   return (
     <div className="container flex">
@@ -58,43 +59,49 @@ export async function AdminHeader() {
               <span className="sr-only">{company?.name}</span>
             </Link>
 
-            <AdminNavMenu className="flex-col" />
+            <NavMenu className="flex-col" />
           </SheetContent>
         </Sheet>
 
-        <AdminNavMenu className="hidden md:flex" />
+        <NavMenu className="hidden md:flex" />
 
         <div className="flex items-center gap-6">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Eye />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Public View</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {isAdmin ? (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <EyeOff />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Admin View</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ) : null}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar>
-                <AvatarImage
-                  src={session?.user?.image ?? "/fallbackAvatar.avif"}
-                />
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <Link href={AUTH_ACTION_LINKS.SIGN_OUT}>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {session?.user?.id ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar>
+                  <AvatarImage
+                    src={session?.user?.image ?? "/fallbackAvatar.avif"}
+                  />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <Link href={AUTH_ACTION_LINKS.SIGN_OUT}>
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            "LOGIN"
+          )}
         </div>
       </header>
     </div>

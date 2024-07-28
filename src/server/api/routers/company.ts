@@ -11,6 +11,13 @@ export const companyRouter = createTRPCRouter({
       where: eq(companies.adminId, ctx.session.user.id),
     });
   }),
+  getCompanyByName: protectedProcedure
+    .input(z.object({ companyName: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.companies.findFirst({
+        where: eq(companies.name, input.companyName),
+      });
+    }),
   getAllBoards: protectedProcedure
     .input(z.object({ companyId: z.string() }))
     .query(async ({ input }) => {
