@@ -67,7 +67,9 @@ export async function AdminHeader() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Eye />
+                <Link href={`/${company?.name}/roadmap`}>
+                  <Eye />
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Public View</p>

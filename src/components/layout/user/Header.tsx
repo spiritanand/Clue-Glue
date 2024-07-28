@@ -18,7 +18,7 @@ import {
 } from "~/components/ui/tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getServerAuthSession } from "~/server/auth";
-import { AUTH_ACTION_LINKS } from "~/lib/constants";
+import { AUTH_ACTION_LINKS, ROUTES } from "~/lib/constants";
 import { api } from "~/trpc/server";
 import NavMenu from "~/components/layout/user/NavMenu";
 import LoginToSamePage from "~/components/layout/user/LoginToSamePage";
@@ -71,7 +71,13 @@ export async function Header({ companyName }: { companyName: string }) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <EyeOff />
+                    <Link
+                      href={ROUTES.ADMIN_FEEDBACK}
+                      className="hover:bg-accent flex items-center gap-1 rounded-2xl border p-2"
+                    >
+                      <p className="text-xs font-bold">Admin View</p>
+                      <EyeOff />
+                    </Link>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Admin View</p>
