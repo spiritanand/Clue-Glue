@@ -22,7 +22,7 @@ export const companyRouter = createTRPCRouter({
         where: eq(companies.name, input.companyName),
       });
     }),
-  getAllBoards: protectedProcedure
+  getAllBoards: publicProcedure
     .input(z.object({ companyId: z.string() }))
     .query(async ({ input }) => {
       return db.query.boards.findMany({

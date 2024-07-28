@@ -71,15 +71,15 @@ export const ROUTES = {
 };
 
 export enum FeedbackStatusBgColors {
-  REVIEW = "bg-stone-400",
-  PLAN = "bg-fuchsia-400",
-  PROGRESS = "bg-sky-400",
-  CLOSED = "bg-red-400",
-  COMPLETED = "bg-green-400",
+  REVIEW = "bg-stone-200",
+  PLAN = "bg-fuchsia-200",
+  PROGRESS = "bg-sky-200",
+  CLOSED = "bg-red-200",
+  COMPLETED = "bg-green-200",
 }
 
 export enum PostTypeBgColors {
-  NEW = "bg-violet-400",
-  FIX = "bg-orange-400",
-  IMPROVEMENT = "bg-teal-400",
+  NEW = "bg-violet-200",
+  FIX = "bg-orange-200",
+  IMPROVEMENT = "bg-teal-200",
 }

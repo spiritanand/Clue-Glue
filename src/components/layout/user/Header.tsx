@@ -21,6 +21,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { AUTH_ACTION_LINKS } from "~/lib/constants";
 import { api } from "~/trpc/server";
 import NavMenu from "~/components/layout/user/NavMenu";
+import LoginToSamePage from "~/components/layout/user/LoginToSamePage";
 
 export async function Header({ companyName }: { companyName: string }) {
   const session = await getServerAuthSession();
@@ -100,7 +101,7 @@ export async function Header({ companyName }: { companyName: string }) {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            "LOGIN"
+            <LoginToSamePage />
           )}
         </div>
       </header>
