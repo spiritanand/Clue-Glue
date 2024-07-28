@@ -16,7 +16,7 @@ export default function RoadmapBoard({
       <hr />
       <CardContent className="h-[60vh] overflow-y-scroll p-6">
         {feedbackList.length > 0 ? (
-          <ul className="flex flex-col">
+          <ul className="flex flex-col gap-4">
             {feedbackList.map((f) => (
               <li key={f.id}>
                 <Card className="shadow-none">
