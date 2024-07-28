@@ -11,7 +11,8 @@ import { Button } from "~/components/ui/button";
 import { ChevronUp } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { type SelectFeedback } from "~/server/db/schema";
+import { FeedbackItemFooter } from "~/app/(authenitcated)/(admin)/admin/feedback/FeedbackItemFooter";
+import { type ExtendedSelectFeedback } from "~/lib/types";
 
 function FeedbackList({ boardId }: { boardId: string }) {
   const session = useSession();
@@ -33,12 +34,6 @@ function FeedbackList({ boardId }: { boardId: string }) {
 
       const feedback = previousFeedbackList?.find((f) => f.id === feedbackId);
 
-      console.log({
-        feedback,
-        previousFeedbackList,
-        feedbackId,
-      });
-
       if (!feedback) return { previousFeedbackList };
 
       // Optimistically update to the new value
@@ -56,7 +51,7 @@ function FeedbackList({ boardId }: { boardId: string }) {
             }
 
             return f;
-          }) as SelectFeedback[],
+          }) as ExtendedSelectFeedback[],
       );
 
       // Return a context object with the
@@ -98,7 +93,13 @@ function FeedbackList({ boardId }: { boardId: string }) {
                     </Button>
                   </CardHeader>
                   <CardContent>{f.description}</CardContent>
-                  <CardFooter>FOOTER</CardFooter>
+                  <CardFooter>
+                    <FeedbackItemFooter
+                      value={f.status}
+                      feedbackId={f.id}
+                      boardId={boardId}
+                    />
+                  </CardFooter>
                 </Card>
               </li>
             ))}

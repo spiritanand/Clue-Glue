@@ -129,6 +129,7 @@ export const companies = createTable("company", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
+export type SelectCompany = typeof companies.$inferSelect;
 
 // Boards (Public Boards that users can post feedback to)
 export const boards = createTable("board", {

@@ -11,11 +11,27 @@ export const postTypeOptions = [
 ] as const;
 
 export enum feedbackStatus {
-  REVIEW = "Under Review",
-  PLAN = "In Planning",
-  PROGRESS = "In Progress",
-  CLOSED = "Closed",
-  COMPLETED = "Completed",
+  REVIEW = "REVIEW",
+  PLAN = "PLAN",
+  PROGRESS = "PROGRESS",
+  CLOSED = "CLOSED",
+  COMPLETED = "COMPLETED",
+}
+
+export const feedbackStatusLabels: Record<feedbackStatus, string> = {
+  [feedbackStatus.REVIEW]: "Under Review",
+  [feedbackStatus.PLAN]: "In Planning",
+  [feedbackStatus.PROGRESS]: "In Progress",
+  [feedbackStatus.CLOSED]: "Closed",
+  [feedbackStatus.COMPLETED]: "Completed",
+};
+
+export enum feedbackStatusColors {
+  REVIEW = "text-stone-600",
+  PLAN = "text-sky-600",
+  PROGRESS = "text-fuchsia-600",
+  CLOSED = "text-red-600",
+  COMPLETED = "text-green-600",
 }
 
 export const feedbackStatusOptions = [

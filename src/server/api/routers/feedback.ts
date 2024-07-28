@@ -8,6 +8,7 @@ import {
 import { feedbacks } from "~/server/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { createFeedbackSchema } from "~/lib/zodSchemas";
+import { feedbackStatusOptions } from "~/lib/constants";
 
 export const feedbackRouter = createTRPCRouter({
   getAllByBoardId: publicProcedure
@@ -15,6 +16,13 @@ export const feedbackRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.db.query.feedbacks.findMany({
         where: eq(feedbacks.boardId, input.boardId),
+        with: {
+          board: {
+            with: {
+              company: true,
+            },
+          },
+        },
         orderBy: [desc(feedbacks.createdAt)],
       });
     }),
@@ -53,6 +61,23 @@ export const feedbackRouter = createTRPCRouter({
         .update(feedbacks)
         .set({
           upvotes,
+        })
+        .where(eq(feedbacks.id, input.feedbackId));
+    }),
+  updateStatus: protectedProcedure
+    .input(
+      z.object({
+        feedbackId: z.string(),
+        status: z.enum(feedbackStatusOptions),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      // TODO: Check for boardId, companyId and adminId, since
+      // only admin can update status
+      await ctx.db
+        .update(feedbacks)
+        .set({
+          status: input.status,
         })
         .where(eq(feedbacks.id, input.feedbackId));
     }),

@@ -7,7 +7,7 @@ import { Input } from "~/components/ui/input";
 
 export default function Changelog() {
   const [searchPost, setSearchPost] = useState("");
-  const [changelogPosts, setChangelogPosts] = useState([
+  const [changelogPosts] = useState([
     {
       id: "1",
       title: "First posts post",
