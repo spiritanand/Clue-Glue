@@ -9,8 +9,8 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import {
-  feedbackStatus,
-  feedbackStatusColors,
+  FeedbackStatus,
+  FeedbackStatusColors,
   feedbackStatusLabels,
 } from "~/lib/constants";
 import { api } from "~/trpc/react";
@@ -25,7 +25,7 @@ export function FeedbackItemFooter({
 }: {
   feedbackId: string;
   boardId: string;
-  value: feedbackStatus;
+  value: FeedbackStatus;
 }) {
   const utils = api.useUtils();
 
@@ -78,20 +78,20 @@ export function FeedbackItemFooter({
       onValueChange={(status) => {
         updateStatus.mutate({
           feedbackId,
-          status: status as feedbackStatus,
+          status: status as FeedbackStatus,
         });
       }}
     >
-      <SelectTrigger className={cn("w-[180px]", feedbackStatusColors[value])}>
+      <SelectTrigger className={cn("w-[180px]", FeedbackStatusColors[value])}>
         <SelectValue placeholder="Update status" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {Object.values(feedbackStatus).map((key) => (
+          {Object.values(FeedbackStatus).map((key) => (
             <SelectItem
               key={key}
               value={key}
-              className={feedbackStatusColors[key]}
+              className={FeedbackStatusColors[key]}
             >
               {feedbackStatusLabels[key]}
             </SelectItem>

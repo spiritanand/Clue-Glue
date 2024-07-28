@@ -17,6 +17,7 @@ export const feedbackRouter = createTRPCRouter({
       return ctx.db.query.feedbacks.findMany({
         where: eq(feedbacks.boardId, input.boardId),
         with: {
+          user: true,
           board: {
             with: {
               company: true,
