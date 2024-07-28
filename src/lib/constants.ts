@@ -1,9 +1,18 @@
+// Base Enum
 export enum postType {
-  NEW = "New",
-  FIX = "Fix",
-  IMPROVEMENT = "Improvement",
+  NEW = "NEW",
+  FIX = "FIX",
+  IMPROVEMENT = "IMPROVEMENT",
 }
 
+// Labels to show to user
+export const postTypeLabels: Record<postType, string> = {
+  [postType.NEW]: "New",
+  [postType.FIX]: "Fix",
+  [postType.IMPROVEMENT]: "Improvement",
+};
+
+// Used in schema
 export const postTypeOptions = [
   postType.NEW,
   postType.FIX,
