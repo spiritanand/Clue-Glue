@@ -29,7 +29,7 @@ function NavMenu({ className }: { className?: string }) {
       </Link>
 
       <Link
-        href={`/${params.companyName}/roadmap`}
+        href={`/${params.companyName}/feedback`}
         className={`${
           pathname.includes("feedback")
             ? "text-primary bg-gray-950"
