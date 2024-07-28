@@ -17,6 +17,7 @@ import {
   feedbackStatusLabels,
 } from "~/lib/constants";
 import { cn } from "~/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 function FeedbackList({ boardId }: { boardId: string }) {
   const pathname = usePathname();
@@ -36,7 +37,21 @@ function FeedbackList({ boardId }: { boardId: string }) {
               <li key={f.id}>
                 <Card className="mx-auto w-full max-w-2xl md:w-3/4">
                   <CardHeader className="flex flex-row items-center justify-between">
-                    <p className="text-xl font-semibold">{f.title}</p>
+                    <p className="flex items-center gap-8 text-xl font-semibold">
+                      <span className="flex flex-col items-center gap-1">
+                        <Avatar>
+                          <AvatarImage
+                            src={f.user.image ?? "/fallbackAvatar.avif"}
+                          />
+                          <AvatarFallback>U</AvatarFallback>
+                        </Avatar>
+                        <span className="text-xs font-medium">
+                          {f.user.name}
+                        </span>
+                      </span>
+
+                      {f.title}
+                    </p>
                     <UpvoteButton feedback={f} />
                   </CardHeader>
                   <CardContent>{f.description}</CardContent>
