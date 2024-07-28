@@ -1,29 +1,53 @@
-# Create T3 App
+# ClueGlue
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Self-hostable customer boards for product feedback and feature requests.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### User View
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Feature Requests:** Submit new feature requests and suggestions.
+- **Roadmap Tracking:** Monitor the progress of feature requests through a roadmap table view.
+- **Progress Updates:** Stay informed about the status of submitted features.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Admin View
 
-## Learn More
+- **Feature Management:** Oversee and update the status of feature requests.
+- **Release Posts:** Publish updates to announce upcoming feature releases.
+- **Dashboard:** Manage and review all feature requests and user feedback in one place.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Tech Stack
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **Next.js:** Framework for building server-rendered React applications.
+- **NextAuth.js:** Authentication solution for secure sign-in and user management.
+- **Drizzle ORM:** ORM for database interactions and schema management.
+- **Tailwind CSS - Shadcn:** Utility-first CSS framework for custom styling.
+- **tRPC:** Type-safe API communication between client and server.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Usage
 
-## How do I deploy this?
+- **Admin Users:** Log in to manage feature requests, update statuses, and release posts.
+- **Regular Users:** Create feature requests and track their progress on the roadmap.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Self Host or Local Setup
+
+1. Clone the repository to your local machine:
+
+```bash
+git https://github.com/spiritanand/Clue-Glue 
+cd Clue-Glue
+```
+
+2. Copy .env.example to .env and update the environment variables:
+
+```bash
+cp .env.example .env
+```
+
+3. Setup google-oauth credentials and a Postgres database
+
+4. Host the app on
+   Vercel/Netlify/Dockerize - [Next.js Deployment](https://nextjs.org/docs/app/building-your-application/deploying)
+
+We hope it helps you gather valuable feedback and make informed decisions on feature
+development.
