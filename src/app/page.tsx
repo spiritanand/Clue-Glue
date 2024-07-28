@@ -55,9 +55,9 @@ export default async function Page() {
                 </ul>
               </div>
               <Image
-                src="/roadmapDemo.png"
-                width={300}
-                height={500}
+                src="/hero-primary.svg"
+                width={700}
+                height={550}
                 objectFit="cover"
                 alt="Hero"
                 className="order-last overflow-hidden rounded-xl object-bottom sm:w-full"
